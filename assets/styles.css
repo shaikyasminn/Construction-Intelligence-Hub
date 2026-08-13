@@ -1,0 +1,278 @@
+/* Construction Intelligence Hub Premium Stylesheet */
+
+/* Import Outfit or Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Page background styling */
+.stApp {
+    background-color: var(--background-color, #F8FAFC) !important;
+    color: var(--text-color, #0F172A) !important;
+}
+
+/* Banner header styling */
+.banner-container {
+    background: linear-gradient(135deg, #0F52BA 0%, #1E3A8A 100%) !important;
+    color: #FFFFFF !important;
+    padding: 2.5rem 2rem !important;
+    border-radius: 16px !important;
+    margin-bottom: 2rem !important;
+    box-shadow: 0 10px 15px -3px rgba(15, 82, 186, 0.15), 0 4px 6px -4px rgba(15, 82, 186, 0.15) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.banner-container::after {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    right: -20% !important;
+    width: 300px !important;
+    height: 300px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 50% !important;
+}
+
+.banner-title {
+    font-size: 2.4rem !important;
+    font-weight: 800 !important;
+    margin: 0 !important;
+    letter-spacing: -0.025em !important;
+    color: #FFFFFF !important;
+}
+
+.banner-subtitle {
+    font-size: 1.15rem !important;
+    font-weight: 400 !important;
+    margin-top: 0.5rem !important;
+    opacity: 0.9 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Metric Cards */
+.card-container {
+    background-color: var(--secondary-background-color, #FFFFFF) !important;
+    color: var(--text-color, #0F172A) !important;
+    border-radius: 12px !important;
+    padding: 1.5rem !important;
+    border: 1px solid rgba(128, 128, 128, 0.2) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+
+.card-container:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+    border-color: var(--primary-color, #3B82F6) !important;
+}
+
+/* Custom Card Colors & Left Accents */
+.card-accent-blue { border-left: 6px solid #2563EB !important; }
+.card-accent-green { border-left: 6px solid #10B981 !important; }
+.card-accent-yellow { border-left: 6px solid #F59E0B !important; }
+.card-accent-red { border-left: 6px solid #EF4444 !important; }
+.card-accent-purple { border-left: 6px solid #8B5CF6 !important; }
+
+.card-title {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: var(--text-color, #64748B) !important;
+    opacity: 0.75 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.card-value {
+    font-size: 1.85rem !important;
+    font-weight: 800 !important;
+    color: var(--text-color, #0F172A) !important;
+    line-height: 1.2 !important;
+}
+
+.card-meta {
+    font-size: 0.8rem !important;
+    color: var(--text-color, #94A3B8) !important;
+    opacity: 0.7 !important;
+    margin-top: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+}
+
+/* Sidebar Custom Styling */
+section[data-testid="stSidebar"] {
+    background-color: var(--secondary-background-color, #0F172A) !important;
+    border-right: 1px solid rgba(128, 128, 128, 0.2) !important;
+}
+
+section[data-testid="stSidebar"] .stMarkdown,
+section[data-testid="stSidebar"] .stMarkdown p,
+section[data-testid="stSidebar"] .stMarkdown h2,
+section[data-testid="stSidebar"] .stMarkdown h3 {
+    color: var(--text-color, #FFFFFF) !important;
+}
+
+/* Sidebar links */
+section[data-testid="stSidebar"] a {
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out !important;
+    padding: 10px 14px !important;
+    margin: 4px 10px !important;
+    border-radius: 8px !important;
+}
+
+section[data-testid="stSidebar"] a span {
+    color: var(--text-color, #475569) !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    opacity: 0.85 !important;
+}
+
+section[data-testid="stSidebar"] a:hover {
+    background-color: rgba(128, 128, 128, 0.15) !important;
+}
+
+section[data-testid="stSidebar"] a:hover span {
+    color: var(--primary-color, #0F52BA) !important;
+    opacity: 1 !important;
+}
+
+/* Active page highlighting link styling */
+section[data-testid="stSidebar"] a[aria-current="page"] {
+    background-color: var(--primary-color, #0F52BA) !important;
+    border-left: 5px solid #60A5FA !important;
+    border-radius: 8px !important;
+}
+
+section[data-testid="stSidebar"] a[aria-current="page"] span {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+}
+
+/* Chat Assist custom CSS styling */
+.chat-container {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+    padding: 1.25rem !important;
+    background: var(--secondary-background-color, #FFFFFF) !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(128, 128, 128, 0.2) !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.chat-bubble {
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 12px !important;
+    margin-bottom: 0.75rem !important;
+    max-width: 85% !important;
+    line-height: 1.5 !important;
+    font-size: 0.95rem !important;
+}
+
+.chat-bubble-user {
+    background-color: var(--primary-color, #EFF6FF) !important;
+    color: var(--text-color, #1E40AF) !important;
+    margin-left: auto !important;
+    border-bottom-right-radius: 2px !important;
+    border: 1px solid rgba(128, 128, 128, 0.2) !important;
+}
+
+.chat-bubble-ai {
+    background-color: var(--background-color, #F8FAFC) !important;
+    color: var(--text-color, #334155) !important;
+    margin-right: auto !important;
+    border-bottom-left-radius: 2px !important;
+    border: 1px solid rgba(128, 128, 128, 0.2) !important;
+}
+
+/* Headers */
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
+    color: var(--text-color, #0F172A) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+/* AI Insight indicator badges */
+.ai-badge {
+    padding: 0.35rem 0.75rem !important;
+    border-radius: 9999px !important;
+    font-size: 0.775rem !important;
+    font-weight: 600 !important;
+    display: inline-block !important;
+}
+
+.ai-badge-high { background-color: #FEE2E2 !important; color: #991B1B !important; }
+.ai-badge-medium { background-color: #FEF3C7 !important; color: #92400E !important; }
+.ai-badge-low { background-color: #D1FAE5 !important; color: #065F46 !important; }
+
+/* Custom Tables styling for bold headers and clean borders */
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin: 1.5rem 0 !important;
+    font-size: 0.95rem !important;
+    font-family: 'Inter', sans-serif !important;
+    background-color: var(--background-color, #FFFFFF) !important;
+    color: var(--text-color, #1E293B) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+th {
+    background-color: var(--secondary-background-color, #F1F5F9) !important;
+    color: var(--text-color, #0F172A) !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+    padding: 12px 16px !important;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.2) !important;
+    text-transform: uppercase !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.05em !important;
+}
+
+td {
+    padding: 12px 16px !important;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.1) !important;
+}
+
+tr:hover {
+    background-color: rgba(128, 128, 128, 0.05) !important;
+}
+
+/* Streamlit Button Overrides */
+div.stButton > button {
+    background-color: var(--primary-color, #0F52BA) !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    padding: 0.5rem 1.25rem !important;
+    border-radius: 8px !important;
+    border: none !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+    width: 100% !important;
+}
+
+div.stButton > button:hover {
+    background-color: var(--text-color, #1E3A8A) !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+}
+
+/* Remove standard Streamlit block padding */
+div[block-class="main"] {
+    padding-top: 2rem !important;
+}
