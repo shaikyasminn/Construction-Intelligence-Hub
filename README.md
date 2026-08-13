@@ -1,78 +1,126 @@
 
-# Construction Intelligence Hub
+# 🏗️ Construction Intelligence Hub
 
-## Overview
+## AI-Powered Construction Project Management & Decision Support Platform
 
-Construction Intelligence Hub (CIH) is an AI-powered construction project management and operational intelligence platform designed to provide a unified view of construction activities.
+Construction Intelligence Hub (CIH) is an AI-powered construction management platform developed to centralize project operations, monitor construction activities, and provide intelligent decision support.
 
-The system integrates project management, workforce management, material tracking, budgeting, safety monitoring, AI-powered insights, AI assistance, and executive reporting into a single enterprise portal.
+The platform combines a Streamlit-based enterprise dashboard with local Large Language Model (LLM) integration using **Ollama and Llama 3.2**.
 
-## Objectives
+---
 
-- Centralize construction project information.
-- Monitor project progress and operational metrics.
-- Manage workforce and material resources.
-- Track budgets and financial performance.
-- Monitor safety and construction risks.
-- Provide AI-powered project insights.
-- Generate consolidated executive reports.
-- Provide secure user login and account creation.
+## 🎯 Project Objective
 
-## Features
+The main objective of Construction Intelligence Hub is to provide a unified platform for construction project management by integrating:
 
-### 🏗️ Construction Intelligence Dashboard
+- Project management
+- Workforce management
+- Material and inventory management
+- Budget and financial monitoring
+- Safety and risk management
+- AI-powered project insights
+- AI conversational assistance
+- Executive report generation
+- User authentication
+
+The integration of Ollama transforms the dashboard from a static monitoring system into an **AI-powered decision support platform**.
+
+---
+
+## 🚀 Key Features
+
+### 📊 Enterprise Dashboard
+
+Provides an overall view of construction operations including:
+
 - Total projects
 - Active projects
 - Delayed projects
-- Workforce overview
+- Workforce statistics
 - Material stock alerts
-- Operational overview
+- Project health information
 
-### 📊 Project Management
+### 🗂️ Project Management
+
 - Project tracking
 - Project progress monitoring
+- Project status analysis
 - Project information management
 - Location and project data
 
 ### 👥 Workforce Management
+
 - Employee records
 - Workforce allocation
-- Attendance tracking
-- Role-based workforce information
+- Job roles
+- Attendance information
+- Workforce statistics
 
 ### 📦 Material Management
+
 - Material inventory
-- Stock status
+- Stock monitoring
 - Low-stock alerts
 - Supplier information
-- Material usage tracking
+- Material usage analysis
 
-### 💳 Budget & Finance
-- Budget monitoring
-- Planned vs actual expenses
-- Expense analysis
-- Financial project insights
+### 💰 Budget & Finance
+
+- Project budgets
+- Actual expenditure
+- Planned vs actual analysis
+- Financial monitoring
+- Budget recommendations
 
 ### 🛡️ Safety & Risk Management
+
 - Safety monitoring
 - HSE information
-- Incident tracking
+- Incident analysis
 - PPE compliance
-- Risk-related information
+- Construction risk analysis
+- AI-based safety recommendations
 
-### 🤖 AI Insights
-- Project health insights
-- Predictive analysis
-- Schedule delay analysis
-- Construction impact analysis
+### 🤖 AI Decision Center
 
-### 💬 AI Assistant
-- Construction project assistance
-- Operational queries
-- AI-powered project support
+The AI Decision Center uses **Ollama with Llama 3.2** to generate intelligent construction insights.
+
+Implemented AI functions include:
+
+- AI Project Summary
+- Construction Risk Analysis
+- Budget Advisor
+- Safety Advisor
+- Material Advisor
+- Executive Report Generation
+
+The application sends project information and user prompts to the local LLM and displays the generated response within the dashboard.
+
+### 💬 ConstructAI Assistant
+
+ConstructAI is a construction-focused AI assistant powered by **Ollama and Llama 3.2**.
+
+It can assist with:
+
+- Construction projects
+- Project management
+- Budget analysis
+- Material estimation
+- Workforce management
+- Site safety
+- Scheduling
+- Risk management
+- Procurement
+- Inventory
+- Equipment
+- Construction reports
+- Building planning
+
+The assistant is restricted to construction and project-management-related queries.
 
 ### 📋 Reporting Agent
-The Reporting Agent aggregates information from different project intelligence modules and generates consolidated reports.
+
+The Reporting Agent consolidates information from construction intelligence modules and generates professional executive reports.
 
 It supports:
 
@@ -88,25 +136,65 @@ It supports:
 - Recommendations
 - Overall project health
 
+Reports can be generated and exported as PDF documents.
+
 ### 🔐 Authentication
-The application includes:
+
+The application includes a login interface with:
 
 - User login
 - Password authentication
-- New account creation
+- Create Account option
 - Session-based authentication
 - Logout functionality
 
-## Technology Stack
+---
 
-- **Python**
-- **Streamlit**
-- **Pandas**
-- **HTML/CSS**
-- **AI/LLM integration**
-- **Git & GitHub**
+## 🧠 AI Architecture
 
-## Project Structure
+```text
+User
+  │
+  ▼
+Streamlit Dashboard
+  │
+  ▼
+AI Decision Center / ConstructAI
+  │
+  ▼
+Ollama Local LLM Runtime
+  │
+  ▼
+Llama 3.2
+  │
+  ▼
+AI Generated Response
+  │
+  ▼
+Construction Intelligence Hub
+````
+
+Ollama is installed and configured locally and is connected to the Streamlit application through the Python Ollama package.
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology | Purpose                      |
+| ---------- | ---------------------------- |
+| Python     | Application development      |
+| Streamlit  | Interactive web application  |
+| Ollama     | Local LLM runtime            |
+| Llama 3.2  | AI language model            |
+| Pandas     | Data processing              |
+| Plotly     | Interactive visualizations   |
+| Requests   | Live weather/API integration |
+| HTML/CSS   | UI customization             |
+| Git/GitHub | Version control              |
+
+---
+
+## 📁 Project Structure
 
 ```text
 Construction_Intelligence_Hub/
@@ -134,43 +222,63 @@ Construction_Intelligence_Hub/
     ├── __init__.py
     ├── helper.py
     └── sample_data.py
-````
+```
 
-## Installation
+---
 
-Clone the repository:
+## ⚙️ Installation
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/Construction-Intelligence-Hub.git
 ```
 
-Navigate into the project:
+### 2. Navigate to the project
 
 ```bash
 cd Construction-Intelligence-Hub
 ```
 
-Install the required dependencies:
+### 3. Install Python dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run the Application
+### 4. Install Ollama
 
-Start the Streamlit application:
+Download and install Ollama from:
+
+[https://ollama.com/](https://ollama.com/)
+
+### 5. Download the Llama 3.2 model
+
+```bash
+ollama pull llama3.2
+```
+
+### 6. Start Ollama
+
+```bash
+ollama serve
+```
+
+### 7. Run the application
 
 ```bash
 python -m streamlit run app.py
 ```
 
-The application will open in your browser at:
+The application will be available at:
 
 ```text
 http://localhost:8501
 ```
 
-## Demo Login
+---
+
+## 🔑 Demo Authentication
 
 For the current prototype:
 
@@ -181,76 +289,115 @@ Password: admin123
 
 New users can also create an account through the **Create Account** option.
 
-> Note: The current authentication is intended for project demonstration purposes and should be replaced with secure database-backed authentication and password hashing for production use.
+> Note: The current authentication implementation is intended for project demonstration. Production deployment should use secure database-backed authentication and password hashing.
 
-## Reporting Agent
+---
 
-The Reporting Agent is responsible for consolidating findings from:
+## 📌 Milestones
 
-* Safety Agent
-* Site Risk Agent
-* Compliance Agent
-* Insurance Agent
-* Project Database
+### Milestone 1 – Core Construction Intelligence Hub
 
-It generates a professional consolidated construction report containing project progress, safety findings, risks, compliance, insurance, materials, recommendations, and overall project health.
+* Enterprise dashboard
+* Project management
+* Workforce management
+* Material management
+* Budget management
+* Safety monitoring
 
-Reports can be generated and exported as PDF documents.
+### Milestone 2 – AI Integration
 
-## Milestones
+* Ollama integration
+* Llama 3.2 integration
+* ConstructAI Assistant
+* AI Decision Center
+* AI Project Summary
+* Risk Analysis
+* Budget Advisor
+* Safety Advisor
+* Material Advisor
+* Executive Report Generation
+* Live weather integration
 
-### Milestone 1
+The second milestone specifically integrated Ollama and Llama 3.2 to provide intelligent project summaries, risk analysis, safety recommendations, budget insights, material planning, and executive reporting. 
 
-* Core Construction Intelligence Hub
-* Dashboard
-* Project Management
-* Workforce Management
-* Material Management
+### Milestone 3 – Generative AI & Construction Intelligence
 
-### Milestone 2
+* Construction-focused Generative AI
+* Domain-specific query validation
+* Project Q&A
+* AI-powered construction assistance
+* Improved AI reliability and relevance
 
-* Budget & Finance
-* Safety & Risk
-* AI Insights
-* AI Assistant
-
-### Milestone 3
+### Current Enhancements
 
 * Reporting Agent
-* Executive reporting
-* Report generation
-* PDF export
-* User authentication
-* Login and account creation
+* PDF report generation
+* Professional login interface
+* Create Account functionality
+* Session-based authentication
 
-## License
+---
+
+## 🔒 AI Domain Restriction
+
+ConstructAI is designed specifically for the construction domain.
+
+The AI validates user queries and supports topics such as:
+
+* Construction
+* Civil engineering
+* Project management
+* Budget
+* Materials
+* Workforce
+* Safety
+* Scheduling
+* Risk
+* Procurement
+* Inventory
+* Equipment
+* Construction reports
+
+Unrelated queries are rejected to maintain the intended domain focus.
+
+---
+
+## 🔮 Future Scope
+
+Potential future enhancements include:
+
+* Machine-learning-based project delay prediction
+* Construction cost estimation
+* Voice-enabled AI Assistant
+* IoT sensor integration
+* Equipment maintenance prediction
+* BIM integration
+* Drone-based site monitoring
+* Advanced predictive analytics
+
+---
+
+## 👩‍💻 Author
+
+**Shaik Yasmin**
+
+B.Tech – Computer Science and Engineering
+
+**Project:** Construction Intelligence Hub
+
+**Program:** Infosys Springboard
+
+---
+
+## 📄 License
 
 This project is licensed under the **MIT License**.
 
 See the `LICENSE` file for details.
 
-## Author
+```
 
-**Shaik Yasmin**
+This version is much closer to **your actual project and milestones**, especially because it documents the Ollama/Llama 3.2 integration that was part of your Milestone 2 work. :contentReference[oaicite:3]{index=3}
 
-Construction Intelligence Hub
-B.Tech – Computer Science and Engineering
-
-````
-
-### One thing
-
-When you create your GitHub repository, make sure you also select **MIT License**, so GitHub creates the `LICENSE` file automatically.
-
-Then your repo will have:
-
-```text
-README.md
-LICENSE
-app.py
-assets/
-pages/
-utils/
-requirements.txt
-````
-
+One correction: I would **not claim the login is SQLite/database-backed** in this README, because your current `app.py` uses session state for the prototype login.
+```
