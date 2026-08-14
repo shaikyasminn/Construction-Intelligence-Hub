@@ -49,6 +49,25 @@ if OLLAMA_API_KEY:
 else:
     st.sidebar.error("❌ Ollama API Key Not Found")
 
+if st.sidebar.button("Test Ollama Cloud"):
+    try:
+        test_response = ollama_client.chat(
+            model="gpt-oss:120b",
+            messages=[
+                {
+                    "role": "user",
+                    "content": "Reply with exactly: Ollama Cloud is working."
+                }
+            ]
+        )
+
+        st.sidebar.success("✅ Ollama Cloud is working!")
+        st.sidebar.write(test_response["message"]["content"])
+
+    except Exception as e:
+        st.sidebar.error("❌ Ollama Cloud test failed")
+        st.sidebar.code(str(e))
+
 init_page("ConstructAI Assistant")
 
 render_banner(
