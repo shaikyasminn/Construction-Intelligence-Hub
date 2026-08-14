@@ -49,24 +49,6 @@ if OLLAMA_API_KEY:
 else:
     st.sidebar.error("❌ Ollama API Key Not Found")
 
-if st.sidebar.button("Test Ollama Cloud"):
-    try:
-        test_response = ollama_client.chat(
-            model="gpt-oss:120b",
-            messages=[
-                {
-                    "role": "user",
-                    "content": "Reply with exactly: Ollama Cloud is working."
-                }
-            ]
-        )
-
-        st.sidebar.success("✅ Ollama Cloud is working!")
-        st.sidebar.write(test_response["message"]["content"])
-
-    except Exception as e:
-        st.sidebar.error("❌ Ollama Cloud test failed")
-        st.sidebar.code(str(e))
 
 init_page("ConstructAI Assistant")
 
@@ -438,44 +420,159 @@ with tab2:
     st.subheader("📄 AI Document Analyzer")
 
     st.write(
-        "Upload a construction document such as a project report, safety report, tender document, or material report."
+        "Upload a construction document such as a project report, "
+        "safety report, tender document, or material report."
     )
 
     uploaded_file = st.file_uploader(
         "Choose a PDF, DOCX or TXT file",
-        type=["pdf", "docx", "txt"]
+        type=["pdf", "docx", "txt"],
+        help="For best performance, upload documents smaller than 10 MB."
     )
 
-    text = ""
+    MAX_FILE_SIZE = 10 * 1024 * 1024       # 10 MB
+    MAX_TEXT_LENGTH = 40000                # characters
+    MAX_PDF_PAGES = 50
 
     if uploaded_file:
 
+        # ----------------------------------------------------
+        # FILE SIZE CHECK
+        # ----------------------------------------------------
+
+        if uploaded_file.size > MAX_FILE_SIZE:
+
+            st.error(
+                "❌ File is too large.\n\n"
+                "Please upload a document smaller than 10 MB."
+            )
+
+            st.stop()
+
+        text = ""
+
+        # ----------------------------------------------------
         # PDF
+        # ----------------------------------------------------
+
         if uploaded_file.type == "application/pdf":
 
-            reader = PyPDF2.PdfReader(uploaded_file)
+            try:
 
-            for page in reader.pages:
-                extracted = page.extract_text()
+                with st.spinner("📄 Reading PDF..."):
 
-                if extracted:
-                    text += extracted + "\n"
+                    reader = PyPDF2.PdfReader(uploaded_file)
 
+                    total_pages = len(reader.pages)
+
+                    pages_to_read = min(
+                        total_pages,
+                        MAX_PDF_PAGES
+                    )
+
+                    for page_number in range(pages_to_read):
+
+                        extracted = reader.pages[
+                            page_number
+                        ].extract_text()
+
+                        if extracted:
+
+                            text += extracted + "\n"
+
+                        # Stop if enough text has been extracted
+                        if len(text) >= MAX_TEXT_LENGTH:
+                            break
+
+                if total_pages > MAX_PDF_PAGES:
+
+                    st.info(
+                        f"ℹ️ This document has {total_pages} pages. "
+                        f"The first {MAX_PDF_PAGES} pages will be analyzed."
+                    )
+
+            except Exception as e:
+
+                st.error(
+                    f"❌ Could not read the PDF.\n\n{str(e)}"
+                )
+
+                st.stop()
+
+        # ----------------------------------------------------
         # TXT
+        # ----------------------------------------------------
+
         elif uploaded_file.type == "text/plain":
 
-            text = uploaded_file.read().decode("utf-8")
+            try:
 
+                with st.spinner("📄 Reading document..."):
+
+                    text = uploaded_file.read().decode(
+                        "utf-8",
+                        errors="ignore"
+                    )
+
+            except Exception as e:
+
+                st.error(
+                    f"❌ Could not read the text file.\n\n{str(e)}"
+                )
+
+                st.stop()
+
+        # ----------------------------------------------------
         # DOCX
-        elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        # ----------------------------------------------------
 
-            document = docx.Document(uploaded_file)
+        elif uploaded_file.type == (
+            "application/vnd.openxmlformats-officedocument."
+            "wordprocessingml.document"
+        ):
 
-            for para in document.paragraphs:
-                text += para.text + "\n"
+            try:
 
-        # Preview
-        if text:
+                with st.spinner("📄 Reading Word document..."):
+
+                    document = docx.Document(uploaded_file)
+
+                    for para in document.paragraphs:
+
+                        if para.text.strip():
+
+                            text += para.text + "\n"
+
+                        if len(text) >= MAX_TEXT_LENGTH:
+                            break
+
+            except Exception as e:
+
+                st.error(
+                    f"❌ Could not read the DOCX file.\n\n{str(e)}"
+                )
+
+                st.stop()
+
+        # ----------------------------------------------------
+        # LIMIT TEXT SENT TO AI
+        # ----------------------------------------------------
+
+        if len(text) > MAX_TEXT_LENGTH:
+
+            text = text[:MAX_TEXT_LENGTH]
+
+            st.warning(
+                "⚠️ The document is large. "
+                "The first 40,000 characters will be analyzed "
+                "to keep AI processing fast."
+            )
+
+        # ----------------------------------------------------
+        # DOCUMENT PREVIEW
+        # ----------------------------------------------------
+
+        if text.strip():
 
             st.success("✅ Document uploaded successfully.")
 
@@ -484,12 +581,27 @@ with tab2:
                 text[:2000],
                 height=250
             )
-            construction_keywords = [
+
+            # ------------------------------------------------
+            # CONSTRUCTION DOCUMENT VALIDATION
+            # ------------------------------------------------
+
+            document_types = [
+                "project report",
                 "construction",
-                "building",
-                "project",
-                "contractor",
-                "site",
+                "safety report",
+                "site inspection",
+                "construction progress",
+                "material report",
+                "material inventory",
+                "tender",
+                "bill of quantities",
+                "boq",
+                "compliance",
+                "hazard",
+                "risk assessment",
+                "incident",
+                "safety audit",
                 "cement",
                 "concrete",
                 "steel",
@@ -497,89 +609,96 @@ with tab2:
                 "beam",
                 "column",
                 "brick",
-                "excavation",
-                "safety",
-                "engineer",
-                "architect",
-                "tender",
-                "boq",
-                "material"
+                "excavation"
             ]
 
+            text_lower = text.lower()
+
             is_construction_document = any(
-                word in text.lower() for word in construction_keywords
+                doc in text_lower
+                for doc in document_types
             )
-            if st.button("🤖 Analyze Document", width="stretch"):
 
-                document_types = [
-                    "project report",
-                    "construction",
-                    "safety report",
-                    "site inspection",
-                    "construction progress",
-                    "material report",
-                    "material inventory",
-                    "tender",
-                    "bill of quantities",
-                    "boq",
-                    "compliance",
-                    "hazard",
-                    "risk assessment",
-                    "incident",
-                    "safety audit"
-                ]
+            # ------------------------------------------------
+            # ANALYZE BUTTON
+            # ------------------------------------------------
 
-                text_lower = text.lower()
-
-                is_construction_document = any(
-                    doc in text_lower
-                    for doc in document_types
-                )
+            if st.button(
+                "🤖 Analyze Document",
+                width="stretch"
+            ):
 
                 if not is_construction_document:
 
-                    st.error("""
-                    ❌ Invalid Document
+                    st.error(
+                        """
+                        ❌ Invalid Document
 
-                    This document is not related to construction.
+                        This document does not appear to be related
+                        to construction.
 
-                    Please upload only:
+                        Please upload:
 
-                    • Construction Project Report
-                    • Safety Report
-                    • BOQ (Bill of Quantities)
-                    • Tender Document
-                    • Material Report
-                    • Site Inspection Report
-                    • Construction Progress Report
-                    """)
+                        • Construction Project Report
+                        • Safety Report
+                        • BOQ
+                        • Tender Document
+                        • Material Report
+                        • Site Inspection Report
+                        • Construction Progress Report
+                        """
+                    )
 
                     st.stop()
 
-                else:
+                prompt = f"""
+You are an AI Construction Document Analyzer.
 
-                    prompt = f"""
-            You are an AI Construction Document Analyzer.
+Analyze the following construction document.
 
-            Analyze the following construction document.
+Provide a professional report with:
 
-            Provide:
+1. Executive Summary
+2. Key Points
+3. Project Status
+4. Risks and Issues
+5. Safety Concerns
+6. Materials / Resource Concerns
+7. Recommendations
 
-            1. Executive Summary
-            2. Key Points
-            3. Risks
-            4. Recommendations
+Keep the response clear, concise and professional.
 
-            {text}
-            """
+DOCUMENT:
 
-                    with st.spinner("🤖 AI is analyzing..."):
+{text}
+"""
+
+                # --------------------------------------------
+                # AI ANALYSIS
+                # --------------------------------------------
+
+                with st.spinner(
+                    "🤖 ConstructAI is analyzing the document..."
+                ):
+
+                    try:
 
                         result = ask_ai(prompt)
 
-                    st.success("Analysis Complete")
+                    except Exception as e:
 
-                    st.markdown(result)
+                        st.error(
+                            "❌ AI analysis failed."
+                        )
+
+                        st.code(str(e))
+
+                        st.stop()
+
+                st.success("✅ Analysis Complete")
+
+                st.markdown(result)
+
                 st.download_button(
                     "📥 Download Analysis",
                     data=result,
@@ -590,8 +709,9 @@ with tab2:
 
         else:
 
-            st.warning("⚠️ No readable text found in this document.")
-
+            st.warning(
+                "⚠️ No readable text found in this document."
+            )
 with tab3:
 
     st.subheader("📝 AI Daily Site Report Generator")
