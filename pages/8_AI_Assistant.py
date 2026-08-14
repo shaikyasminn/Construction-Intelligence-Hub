@@ -14,10 +14,40 @@ if root_dir not in sys.path or sys.path[0] != root_dir:
 
 import streamlit as st
 import pandas as pd
-from ollama import chat
+from ollama import Client
 import PyPDF2
 import docx
 from utils.helper import init_page, render_banner
+# ============================================================
+# OLLAMA CONFIGURATION
+# Local machine  -> Ollama + llama3.2
+# Streamlit Cloud -> Ollama Cloud + gpt-oss:120b
+# ============================================================
+
+try:
+    OLLAMA_API_KEY = st.secrets.get("OLLAMA_API_KEY", "")
+except Exception:
+    OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY", "")
+
+if OLLAMA_API_KEY:
+    # Streamlit Cloud / Ollama Cloud
+    ollama_client = Client(
+        host="https://ollama.com",
+        headers={
+            "Authorization": f"Bearer {OLLAMA_API_KEY}"
+        }
+    )
+    AI_MODEL = "gpt-oss:120b"
+else:
+    # Local development
+    ollama_client = Client(
+        host="http://localhost:11434"
+    )
+    AI_MODEL = "llama3.2"
+if OLLAMA_API_KEY:
+    st.sidebar.success("☁️ Ollama Cloud Connected")
+else:
+    st.sidebar.error("❌ Ollama API Key Not Found")
 
 init_page("ConstructAI Assistant")
 
@@ -120,9 +150,8 @@ Please ask questions about:
 """
     try:
 
-        response = chat(
-
-            model="llama3.2",
+        response = ollama_client.chat(
+            model=AI_MODEL,
 
             messages=[
 
@@ -329,8 +358,8 @@ with tab1:
         5. Recommendations
         """
 
-                response = chat(
-                    model="llama3.2",
+                response = ollama_client.chat(
+                    model=AI_MODEL,
                     messages=[
                         {
                             "role":"user",
